@@ -21,9 +21,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "TP.h"
+#include "default_font.h"
 #include "er_tft040.h"
-#include "test_pic.h"
+// #include "test_pic.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,16 +94,18 @@ int main(void) {
     MX_USART1_UART_Init();
     /* USER CODE BEGIN 2 */
 
-    volatile char greeting[] = "Hello Debugger";
-
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     ER_TFT040_init();
-    ER_TFT040_clearLCD(0);
-    // DispRGBGray();
-    ER_TFT040_drawPicture(100, 100, 200, 120, PIC);
+    ER_TFT040_textTest(defaultFont);
+
+    // for (uint8_t i = 0; i < 4; i++) {
+    //     for (uint8_t j = 0; j < 4; j++) {
+    //         ER_TFT040_drawPicture(200 * i, 120 * j, 200, 120, PIC);
+    //     }
+    // }
 
     HAL_Delay(1000);
 

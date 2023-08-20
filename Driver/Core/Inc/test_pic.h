@@ -1,6 +1,6 @@
 #include "stdint.h"
 
-const uint8_t PIC[] = {
+uint8_t PIC[] = {
 
     //----- H - L, x direct, 8 pixel mode, 64k color R5G6B5.
     //----- width x height = 200 x 120, Total bytes = 48000

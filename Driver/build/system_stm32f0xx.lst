@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 1
+ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 1
   30:Core/Src/system_stm32f0xx.c ****   * License. You may obtain a copy of the License at:
   31:Core/Src/system_stm32f0xx.c ****   *                        opensource.org/licenses/BSD-3-Clause
   32:Core/Src/system_stm32f0xx.c ****   *
-ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 2
+ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s 			page 2
 
 
   33:Core/Src/system_stm32f0xx.c ****   ******************************************************************************
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 1
   87:Core/Src/system_stm32f0xx.c **** /**
   88:Core/Src/system_stm32f0xx.c ****   * @}
   89:Core/Src/system_stm32f0xx.c ****   */
-ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 3
+ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s 			page 3
 
 
   90:Core/Src/system_stm32f0xx.c **** 
@@ -178,7 +178,7 @@ ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 1
   34 0000 7047     		bx	lr
   35              		.cfi_endproc
   36              	.LFE40:
-ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 4
+ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s 			page 4
 
 
   38              		.global	__aeabi_uidiv
@@ -238,7 +238,7 @@ ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 1
   54              		.cfi_offset 4, -8
   55              		.cfi_offset 14, -4
  176:Core/Src/system_stm32f0xx.c ****   uint32_t tmp = 0, pllmull = 0, pllsource = 0, predivfactor = 0;
-ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 5
+ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s 			page 5
 
 
   56              		.loc 1 176 3 view .LVU3
@@ -298,7 +298,7 @@ ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 1
  214:Core/Src/system_stm32f0xx.c ****         SystemCoreClock = (HSI_VALUE/predivfactor) * pllmull;
  215:Core/Src/system_stm32f0xx.c **** #else
  216:Core/Src/system_stm32f0xx.c ****         /* HSI used as PLL clock source : SystemCoreClock = HSI/2 * PLLMUL */
-ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 6
+ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s 			page 6
 
 
  217:Core/Src/system_stm32f0xx.c ****         SystemCoreClock = (HSI_VALUE >> 1) * pllmull;
@@ -358,7 +358,7 @@ ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 1
  109              	.LVL8:
  230:Core/Src/system_stm32f0xx.c ****   /* HCLK clock frequency */
  231:Core/Src/system_stm32f0xx.c ****   SystemCoreClock >>= tmp;
-ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 7
+ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s 			page 7
 
 
  110              		.loc 1 231 3 is_stmt 1 view .LVU22
@@ -418,7 +418,7 @@ ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 1
  150 004c 0F21     		movs	r1, #15
  151 004e 0C40     		ands	r4, r1
  193:Core/Src/system_stm32f0xx.c ****       predivfactor = (RCC->CFGR2 & RCC_CFGR2_PREDIV) + 1;
-ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 8
+ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s 			page 8
 
 
  152              		.loc 1 193 15 view .LVU38
@@ -478,7 +478,7 @@ ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 1
  193 007c D2E7     		b	.L6
  194              	.L10:
  195 007e C046     		.align	2
-ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 9
+ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s 			page 9
 
 
  196              	.L9:
@@ -514,22 +514,22 @@ ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 1
  229              		.file 3 "/Users/tom/Library/Application Support/Code/User/globalStorage/bmd.stm32-for-vscode/@xpac
  230              		.file 4 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h"
  231              		.file 5 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f030x8.h"
-ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s 			page 10
+ARM GAS  /var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 system_stm32f0xx.c
-/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s:19     .text.SystemInit:0000000000000000 $t
-/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s:25     .text.SystemInit:0000000000000000 SystemInit
-/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s:40     .text.SystemCoreClockUpdate:0000000000000000 $t
-/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s:46     .text.SystemCoreClockUpdate:0000000000000000 SystemCoreClockUpdate
-/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s:197    .text.SystemCoreClockUpdate:0000000000000080 $d
-/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s:224    .data.SystemCoreClock:0000000000000000 SystemCoreClock
-/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s:216    .rodata.AHBPrescTable:0000000000000000 AHBPrescTable
-/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s:209    .rodata.APBPrescTable:0000000000000000 APBPrescTable
-/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s:206    .rodata.APBPrescTable:0000000000000000 $d
-/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s:213    .rodata.AHBPrescTable:0000000000000000 $d
-/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//ccAy6uBv.s:221    .data.SystemCoreClock:0000000000000000 $d
+/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s:19     .text.SystemInit:0000000000000000 $t
+/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s:25     .text.SystemInit:0000000000000000 SystemInit
+/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s:40     .text.SystemCoreClockUpdate:0000000000000000 $t
+/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s:46     .text.SystemCoreClockUpdate:0000000000000000 SystemCoreClockUpdate
+/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s:197    .text.SystemCoreClockUpdate:0000000000000080 $d
+/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s:224    .data.SystemCoreClock:0000000000000000 SystemCoreClock
+/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s:216    .rodata.AHBPrescTable:0000000000000000 AHBPrescTable
+/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s:209    .rodata.APBPrescTable:0000000000000000 APBPrescTable
+/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s:206    .rodata.APBPrescTable:0000000000000000 $d
+/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s:213    .rodata.AHBPrescTable:0000000000000000 $d
+/var/folders/_5/7dt5dlyd7598cb98063hl5tr0000gn/T//cc26TfSd.s:221    .data.SystemCoreClock:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_uidiv

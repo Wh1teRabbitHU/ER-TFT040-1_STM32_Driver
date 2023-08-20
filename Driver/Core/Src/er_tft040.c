@@ -54,11 +54,11 @@ void ER_TFT040_setCursor(uint16_t xStart, uint16_t xEnd, uint16_t yStart, uint16
 
 void ER_TFT040_init(void) {
     HAL_GPIO_WritePin(DISPLAY_RESET_GPIO_Port, DISPLAY_RESET_Pin, 1);
-    HAL_Delay(200);
+    HAL_Delay(10);
     HAL_GPIO_WritePin(DISPLAY_RESET_GPIO_Port, DISPLAY_RESET_Pin, 0);
-    HAL_Delay(800);
+    HAL_Delay(10);
     HAL_GPIO_WritePin(DISPLAY_RESET_GPIO_Port, DISPLAY_RESET_Pin, 1);
-    HAL_Delay(800);
+    HAL_Delay(10);
 
     // 35510h
     ER_TFT040_writeCommand(0xF000);
@@ -882,6 +882,8 @@ void ER_TFT040_init(void) {
 
     HAL_Delay(120);
 
+    ER_TFT040_clearLCD(0);
+
     ER_TFT040_writeCommand(0x2900);  // Display On
     HAL_Delay(100);
 }
@@ -893,6 +895,36 @@ void ER_TFT040_clearLCD(uint16_t i) {
         for (uint16_t w = 0; w < ER_TFT040_SCREEN_HEIGHT; w++) {
             ER_TFT040_writeData(i);
         }
+    }
+}
+
+void ER_TFT040_drawCharacter(uint8_t *font, uint8_t character, uint16_t x, uint16_t y, uint16_t fontColor,
+                             uint16_t bgcolor) {
+    uint8_t i, j;
+    uint8_t *temp = font;
+
+    ER_TFT040_setCursor(x, x + 7, y, y + 11);
+    temp += (character - 32) * 12;
+    for (j = 0; j < 12; j++) {
+        for (i = 0; i < 8; i++) {
+            if ((*temp & (1 << (7 - i))) != 0) {
+                ER_TFT040_writeData(fontColor);
+            } else {
+                ER_TFT040_writeData(bgcolor);
+            }
+        }
+        temp++;
+    }
+}
+
+void ER_TFT040_drawText(uint8_t *font, uint8_t *str, uint16_t x, uint16_t y, uint16_t fontColor, uint16_t bgcolor) {
+    unsigned int x1, y1;
+    x1 = x;
+    y1 = y;
+    while (*str != '\0') {
+        ER_TFT040_drawCharacter(font, *str, x1, y1, fontColor, bgcolor);
+        x1 += 7;
+        str++;
     }
 }
 
@@ -916,4 +948,16 @@ void ER_TFT040_drawPicture(uint16_t x, uint16_t y, uint16_t width, uint16_t heig
 
     ER_TFT040_writeCommand(0x3600);
     ER_TFT040_writeData(0x00);
+}
+
+void ER_TFT040_textTest(uint8_t *font) {
+    ER_TFT040_drawText(font, "HELLOW! PLEASE TOUCH ME!  Welcome used 4 inch TFT LCD module", 30, 5, 0xF800, 0xffff);
+    ER_TFT040_drawText(font, "TP TEST!", 80, 100, 0x00FF00, 0xf800);
+    ER_TFT040_drawText(font, "X:", 10, 305, 0x001f, 0xffff);
+    ER_TFT040_drawText(font, "0.00", 25, 305, 0xf800, 0xffff);
+    ER_TFT040_drawText(font, "Y:", 80, 305, 0xf800, 0xffff);
+    ER_TFT040_drawText(font, "12.34", 95, 305, 0xf800, 0xffff);
+
+    // ER_TFT040_writeCommand(0x3600);
+    // ER_TFT040_writeData(0x00);
 }
