@@ -2,6 +2,8 @@
 #define ER_TFT040_H
 
 // #include "default_font.h"
+#include <stdlib.h>
+
 #include "main.h"
 
 #define ER_TFT040_SCREEN_WIDTH 480
@@ -29,6 +31,10 @@ void ER_TFT040_init(void);
 void ER_TFT040_clearLCD(uint16_t i);
 void ER_TFT040_setCursor(uint16_t xStart, uint16_t xEnd, uint16_t yStart, uint16_t yEnd);
 
+void ER_TFT040_drawPixel(int16_t x, int16_t y, uint16_t color);
+void ER_TFT040_drawLine(int16_t xStart, int16_t yStart, int16_t xEnd, int16_t yEnd, uint16_t color);
+void ER_TFT040_drawRectangle(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t color);
+void ER_TFT040_drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color);
 void ER_TFT040_drawText(ER_TFT040_textProps *textProps);
 void ER_TFT040_drawPicture(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t picture[]);
 
