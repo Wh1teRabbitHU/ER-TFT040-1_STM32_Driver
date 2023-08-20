@@ -21,8 +21,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "default_font.h"
 #include "er_tft040.h"
+#include "font_6_12.h"
+#include "stdio.h"
 // #include "test_pic.h"
 /* USER CODE END Includes */
 
@@ -60,6 +61,51 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void ER_TFT040_textTest() {
+    ER_TFT040_textProps text1 = {.font = fontData,
+                                 .text = "Welcome to the 4 inch TFT LCD module!",
+                                 .posX = 30,
+                                 .posY = 5,
+                                 .fontSize = 1,
+                                 .fontColor = CONVERT_24BIT_COLOR(0xFF0000),
+                                 .backgroundColor = CONVERT_24BIT_COLOR(0xFFFFFF)};
+
+    ER_TFT040_textProps text2 = {.font = fontData,
+                                 .text = "Font size 1",
+                                 .posX = 10,
+                                 .posY = 20,
+                                 .fontSize = 1,
+                                 .fontColor = CONVERT_24BIT_COLOR(0xFFFFFF),
+                                 .backgroundColor = CONVERT_24BIT_COLOR(0xFF00FF)};
+    ER_TFT040_textProps text3 = {.font = fontData,
+                                 .text = "Font size 2",
+                                 .posX = 20,
+                                 .posY = 32,
+                                 .fontSize = 2,
+                                 .fontColor = CONVERT_24BIT_COLOR(0xFFFFFF),
+                                 .backgroundColor = CONVERT_24BIT_COLOR(0x0000FF)};
+    ER_TFT040_textProps text4 = {.font = fontData,
+                                 .text = "Font size 3",
+                                 .posX = 30,
+                                 .posY = 56,
+                                 .fontSize = 3,
+                                 .fontColor = CONVERT_24BIT_COLOR(0xFFFFFF),
+                                 .backgroundColor = CONVERT_24BIT_COLOR(0x00FF00)};
+    ER_TFT040_textProps text5 = {.font = fontData,
+                                 .text = "Font size 4",
+                                 .posX = 40,
+                                 .posY = 92,
+                                 .fontSize = 4,
+                                 .fontColor = CONVERT_24BIT_COLOR(0xFFFFFF),
+                                 .backgroundColor = CONVERT_24BIT_COLOR(0xFF0000)};
+
+    ER_TFT040_drawText(&text1);
+    ER_TFT040_drawText(&text2);
+    ER_TFT040_drawText(&text3);
+    ER_TFT040_drawText(&text4);
+    ER_TFT040_drawText(&text5);
+}
 
 /* USER CODE END 0 */
 
@@ -99,20 +145,33 @@ int main(void) {
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     ER_TFT040_init();
-    ER_TFT040_textTest(defaultFont);
+    ER_TFT040_textTest();
 
-    // for (uint8_t i = 0; i < 4; i++) {
-    //     for (uint8_t j = 0; j < 4; j++) {
-    //         ER_TFT040_drawPicture(200 * i, 120 * j, 200, 120, PIC);
-    //     }
-    // }
+    // ER_TFT040_drawPicture(200, 120, 200, 120, PIC);
 
-    HAL_Delay(1000);
+    char textBuffer[16];
+    uint16_t counter = 0;
+    sprintf(textBuffer, " Counter: %u", counter);
+
+    ER_TFT040_textProps counterText = {.font = fontData,
+                                       .text = textBuffer,
+                                       .posX = 10,
+                                       .posY = 200,
+                                       .fontSize = 2,
+                                       .fontColor = CONVERT_24BIT_COLOR(0xFF0000),
+                                       .backgroundColor = CONVERT_24BIT_COLOR(0xFFFFFF)};
 
     while (1) {
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
+
+        sprintf(textBuffer, " Counter: %u", counter++);
+        counterText.text = textBuffer;
+
+        ER_TFT040_drawText(&counterText);
+
+        HAL_Delay(100);
     }
     /* USER CODE END 3 */
 }

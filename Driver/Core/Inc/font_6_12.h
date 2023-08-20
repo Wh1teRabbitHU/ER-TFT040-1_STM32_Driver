@@ -1,5 +1,5 @@
 
-unsigned char defaultFont[] = {
+unsigned char fontData[] = {
 
     /*--   {SPACE}  --*/
     0x00,

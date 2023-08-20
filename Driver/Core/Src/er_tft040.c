@@ -898,33 +898,43 @@ void ER_TFT040_clearLCD(uint16_t i) {
     }
 }
 
-void ER_TFT040_drawCharacter(uint8_t *font, uint8_t character, uint16_t x, uint16_t y, uint16_t fontColor,
-                             uint16_t bgcolor) {
+// 00112233445566
+
+void ER_TFT040_drawCharacter(uint8_t *font, uint8_t character, uint16_t x, uint16_t y, uint8_t fontSize,
+                             uint16_t fontColor, uint16_t bgcolor) {
     uint8_t i, j;
     uint8_t *temp = font;
+    uint8_t fontWidth = 8 * fontSize;
+    uint8_t fontHeight = 12 * fontSize;
 
-    ER_TFT040_setCursor(x, x + 7, y, y + 11);
+    ER_TFT040_setCursor(x, x + fontWidth - 1, y, y + fontHeight - 1);
     temp += (character - 32) * 12;
-    for (j = 0; j < 12; j++) {
-        for (i = 0; i < 8; i++) {
-            if ((*temp & (1 << (7 - i))) != 0) {
+    for (j = 0; j < fontHeight; j++) {
+        for (i = 0; i < fontWidth; i++) {
+            if ((*temp & (1 << (7 - i / fontSize))) != 0) {
                 ER_TFT040_writeData(fontColor);
             } else {
                 ER_TFT040_writeData(bgcolor);
             }
         }
-        temp++;
+
+        if (j % fontSize == fontSize - 1) {
+            temp++;
+        }
     }
 }
 
-void ER_TFT040_drawText(uint8_t *font, uint8_t *str, uint16_t x, uint16_t y, uint16_t fontColor, uint16_t bgcolor) {
-    unsigned int x1, y1;
-    x1 = x;
-    y1 = y;
-    while (*str != '\0') {
-        ER_TFT040_drawCharacter(font, *str, x1, y1, fontColor, bgcolor);
-        x1 += 7;
-        str++;
+void ER_TFT040_drawText(ER_TFT040_textProps *textProps) {
+    char *textPointer = textProps->text;
+    uint16_t posX = textProps->posX;
+    uint16_t posY = textProps->posY;
+    uint8_t fontWidth = 8 * textProps->fontSize;
+
+    while (*textPointer != '\0') {
+        ER_TFT040_drawCharacter(textProps->font, *textPointer, posX, posY, textProps->fontSize, textProps->fontColor,
+                                textProps->backgroundColor);
+        posX += fontWidth - 1;
+        textPointer++;
     }
 }
 
@@ -948,16 +958,4 @@ void ER_TFT040_drawPicture(uint16_t x, uint16_t y, uint16_t width, uint16_t heig
 
     ER_TFT040_writeCommand(0x3600);
     ER_TFT040_writeData(0x00);
-}
-
-void ER_TFT040_textTest(uint8_t *font) {
-    ER_TFT040_drawText(font, "HELLOW! PLEASE TOUCH ME!  Welcome used 4 inch TFT LCD module", 30, 5, 0xF800, 0xffff);
-    ER_TFT040_drawText(font, "TP TEST!", 80, 100, 0x00FF00, 0xf800);
-    ER_TFT040_drawText(font, "X:", 10, 305, 0x001f, 0xffff);
-    ER_TFT040_drawText(font, "0.00", 25, 305, 0xf800, 0xffff);
-    ER_TFT040_drawText(font, "Y:", 80, 305, 0xf800, 0xffff);
-    ER_TFT040_drawText(font, "12.34", 95, 305, 0xf800, 0xffff);
-
-    // ER_TFT040_writeCommand(0x3600);
-    // ER_TFT040_writeData(0x00);
 }
