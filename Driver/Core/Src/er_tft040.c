@@ -1042,8 +1042,6 @@ void ER_TFT040_drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
     }
 }
 
-void drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color) { ER_TFT040_drawLine(x, y, x, y + h - 1, color); }
-
 void ER_TFT040_fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
     ER_TFT040_drawLine(x0, y0 - r, x0, (y0 - r) + (2 * r + 1) - 1, color);
 
