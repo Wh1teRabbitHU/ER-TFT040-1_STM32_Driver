@@ -1,0 +1,26 @@
+{
+  "configurations": [
+    {
+      "name": "STM32",
+      "includePath": [
+        "Core/Inc",
+        "Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+        "Drivers/CMSIS/Include",
+        "Drivers/STM32F4xx_HAL_Driver/Inc",
+        "Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+        "FATFS/App",
+        "FATFS/Target",
+        "LIBJPEG/App",
+        "LIBJPEG/Target",
+        "Middlewares/Third_Party/FatFs/src",
+        "Middlewares/Third_Party/LibJPEG/include"
+      ],
+      "defines": [
+        "STM32F446xx",
+        "USE_HAL_DRIVER"
+      ],
+      "compilerPath": "/Users/tom/Library/Application Support/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-tools/arm-none-eabi-gcc/12.2.1-1.2.1/.content/bin/arm-none-eabi-gcc"
+    }
+  ],
+  "version": 4
+}
