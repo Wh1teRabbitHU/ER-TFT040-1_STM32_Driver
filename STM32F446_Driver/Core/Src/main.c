@@ -71,37 +71,37 @@ void ER_TFT040_textTest() {
                                  .posX = 30,
                                  .posY = 5,
                                  .fontSize = 1,
-                                 .fontColor = CONVERT_24BIT_COLOR(0xFF0000),
-                                 .backgroundColor = CONVERT_24BIT_COLOR(0xFFFFFF)};
+                                 .fontColor = 0xFF0000,
+                                 .backgroundColor = 0xFFFFFF};
 
     ER_TFT040_textProps text2 = {.font = fontData,
                                  .text = "Font size 1",
                                  .posX = 10,
                                  .posY = 20,
                                  .fontSize = 1,
-                                 .fontColor = CONVERT_24BIT_COLOR(0xFFFFFF),
-                                 .backgroundColor = CONVERT_24BIT_COLOR(0xFF00FF)};
+                                 .fontColor = 0xFFFFFF,
+                                 .backgroundColor = 0xFF00FF};
     ER_TFT040_textProps text3 = {.font = fontData,
                                  .text = "Font size 2",
                                  .posX = 20,
                                  .posY = 32,
                                  .fontSize = 2,
-                                 .fontColor = CONVERT_24BIT_COLOR(0xFFFFFF),
-                                 .backgroundColor = CONVERT_24BIT_COLOR(0x0000FF)};
+                                 .fontColor = 0xFFFFFF,
+                                 .backgroundColor = 0x0000FF};
     ER_TFT040_textProps text4 = {.font = fontData,
                                  .text = "Font size 3",
                                  .posX = 30,
                                  .posY = 56,
                                  .fontSize = 3,
-                                 .fontColor = CONVERT_24BIT_COLOR(0xFFFFFF),
-                                 .backgroundColor = CONVERT_24BIT_COLOR(0x00FF00)};
+                                 .fontColor = 0xFFFFFF,
+                                 .backgroundColor = 0x00FF00};
     ER_TFT040_textProps text5 = {.font = fontData,
                                  .text = "Font size 4",
                                  .posX = 40,
                                  .posY = 92,
                                  .fontSize = 4,
-                                 .fontColor = CONVERT_24BIT_COLOR(0xFFFFFF),
-                                 .backgroundColor = CONVERT_24BIT_COLOR(0xFF0000)};
+                                 .fontColor = 0xFFFFFF,
+                                 .backgroundColor = 0xFF0000};
 
     ER_TFT040_drawText(&text1);
     ER_TFT040_drawText(&text2);
@@ -150,21 +150,21 @@ int main(void) {
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
 
-    ER_TFT040_clearLCD(CONVERT_24BIT_COLOR(0xFF0000));
-    ER_TFT040_clearLCD(CONVERT_24BIT_COLOR(0x00FF00));
-    ER_TFT040_clearLCD(CONVERT_24BIT_COLOR(0x0000FF));
-    ER_TFT040_clearLCD(CONVERT_24BIT_COLOR(0x222222));
+    ER_TFT040_clearLCD(0xFF0000);
+    ER_TFT040_clearLCD(0x00FF00);
+    ER_TFT040_clearLCD(0x0000FF);
+    ER_TFT040_clearLCD(0x000000);
 
-    ER_TFT040_drawPixel(239, 400, CONVERT_24BIT_COLOR(0xFF0000));
-    ER_TFT040_drawPixel(240, 400, CONVERT_24BIT_COLOR(0xFF0000));
-    ER_TFT040_drawPixel(241, 400, CONVERT_24BIT_COLOR(0xFF0000));
-    ER_TFT040_drawPixel(240, 399, CONVERT_24BIT_COLOR(0xFF0000));
-    ER_TFT040_drawPixel(240, 401, CONVERT_24BIT_COLOR(0xFF0000));
-    ER_TFT040_drawLine(10, 400, 200, 700, CONVERT_24BIT_COLOR(0x00FF00));
-    ER_TFT040_fillRectangle(320, 620, 160, 180, CONVERT_24BIT_COLOR(0xFF0000));
-    ER_TFT040_drawRectangle(300, 600, 160, 180, CONVERT_24BIT_COLOR(0x0000FF));
-    ER_TFT040_drawCircle(240, 400, 166, CONVERT_24BIT_COLOR(0xFF0000));
-    ER_TFT040_fillCircle(240, 400, 64, CONVERT_24BIT_COLOR(0x00FF00));
+    ER_TFT040_drawPixel(239, 400, 0xFF0000);
+    ER_TFT040_drawPixel(240, 400, 0xFF0000);
+    ER_TFT040_drawPixel(241, 400, 0xFF0000);
+    ER_TFT040_drawPixel(240, 399, 0xFF0000);
+    ER_TFT040_drawPixel(240, 401, 0xFF0000);
+    ER_TFT040_drawLine(10, 400, 200, 700, 0x00FF00);
+    ER_TFT040_fillRectangle(320, 620, 160, 180, 0xFF0000);
+    ER_TFT040_drawRectangle(300, 600, 160, 180, 0x0000FF);
+    ER_TFT040_drawCircle(240, 400, 166, 0xFF0000);
+    ER_TFT040_fillCircle(240, 400, 64, 0x00FF00);
     ER_TFT040_textTest();
 
     char textBuffer[16];
@@ -176,8 +176,8 @@ int main(void) {
                                        .posX = 10,
                                        .posY = 200,
                                        .fontSize = 2,
-                                       .fontColor = CONVERT_24BIT_COLOR(0xFF0000),
-                                       .backgroundColor = CONVERT_24BIT_COLOR(0xFFFFFF)};
+                                       .fontColor = 0xFF0000,
+                                       .backgroundColor = 0xFFFFFF};
 
     while (1) {
         sprintf(textBuffer, " Counter: %u", counter++);

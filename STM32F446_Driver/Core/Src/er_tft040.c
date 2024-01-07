@@ -1,11 +1,37 @@
 #include "er_tft040.h"
 
-static void ER_TFT040_setDataPort(uint16_t data) {
-    uint32_t resetData = (data ^ ER_TFT040_RESET_DATA_MASK) << 16U;
+static void ER_TFT040_set16BitDataPort(uint16_t data) {
+    uint32_t resetData = (data ^ ER_TFT040_LOWER_DATA_MASK) << 16U;
     uint32_t setData = resetData | data;
-    uint8_t d11 = (data >> 11) & 1;
 
     GPIOB->BSRR = setData;
+
+    uint8_t d11 = (data >> 11) & 1;
+
+    // There is no PB11 on the STM32F446, so it is routed to PA11
+    HAL_GPIO_WritePin(DISPLAY_D11_GPIO_Port, DISPLAY_D11_Pin, d11);
+}
+
+static void ER_TFT040_set24BitDataPort(uint32_t data) {
+    uint8_t boolean = 0;
+    if (boolean) {
+        ER_TFT040_set16BitDataPort(CONVERT_24BIT_COLOR(data));
+        return;
+    }
+
+    uint32_t upperData = (data >> 16) & ER_TFT040_UPPER_DATA_MASK;  // Data 16-23
+    uint32_t lowerData = data & ER_TFT040_LOWER_DATA_MASK;          // Data 0-15
+
+    uint32_t resetDataA = (upperData ^ ER_TFT040_UPPER_DATA_MASK) << 16U;
+    uint32_t portAValue = resetDataA | upperData;
+
+    uint32_t resetDataB = (lowerData ^ ER_TFT040_LOWER_DATA_MASK) << 16U;
+    uint32_t portBValue = resetDataB | lowerData;
+
+    GPIOA->BSRR = portAValue;
+    GPIOB->BSRR = portBValue;
+
+    uint8_t d11 = (lowerData >> 11) & 1;
 
     // There is no PB11 on the STM32F446, so it is routed to PA11
     HAL_GPIO_WritePin(DISPLAY_D11_GPIO_Port, DISPLAY_D11_Pin, d11);
@@ -22,7 +48,7 @@ void ER_TFT040_writeCommand(uint16_t command) {
     HAL_GPIO_WritePin(DISPLAY_RD_GPIO_Port, DISPLAY_RD_Pin, 1);
     HAL_GPIO_WritePin(DISPLAY_DC_GPIO_Port, DISPLAY_DC_Pin, 0);
 
-    ER_TFT040_setDataPort(command);
+    ER_TFT040_set16BitDataPort(command);
 
     HAL_GPIO_WritePin(DISPLAY_WR_GPIO_Port, DISPLAY_WR_Pin, 0);
     HAL_GPIO_WritePin(DISPLAY_WR_GPIO_Port, DISPLAY_WR_Pin, 1);
@@ -34,7 +60,19 @@ void ER_TFT040_writeData(uint16_t data) {
     HAL_GPIO_WritePin(DISPLAY_RD_GPIO_Port, DISPLAY_RD_Pin, 1);
     HAL_GPIO_WritePin(DISPLAY_DC_GPIO_Port, DISPLAY_DC_Pin, 1);
 
-    ER_TFT040_setDataPort(data);
+    ER_TFT040_set16BitDataPort(data);
+
+    HAL_GPIO_WritePin(DISPLAY_WR_GPIO_Port, DISPLAY_WR_Pin, 0);
+    HAL_GPIO_WritePin(DISPLAY_WR_GPIO_Port, DISPLAY_WR_Pin, 1);
+    HAL_GPIO_WritePin(DISPLAY_CSX_GPIO_Port, DISPLAY_CSX_Pin, 1);
+}
+
+void ER_TFT040_writeColor(uint32_t data) {
+    HAL_GPIO_WritePin(DISPLAY_CSX_GPIO_Port, DISPLAY_CSX_Pin, 0);
+    HAL_GPIO_WritePin(DISPLAY_RD_GPIO_Port, DISPLAY_RD_Pin, 1);
+    HAL_GPIO_WritePin(DISPLAY_DC_GPIO_Port, DISPLAY_DC_Pin, 1);
+
+    ER_TFT040_set24BitDataPort(data);
 
     HAL_GPIO_WritePin(DISPLAY_WR_GPIO_Port, DISPLAY_WR_Pin, 0);
     HAL_GPIO_WritePin(DISPLAY_WR_GPIO_Port, DISPLAY_WR_Pin, 1);
@@ -915,7 +953,7 @@ void ER_TFT040_init(void) {
     ER_TFT040_writeData(0x00);
 
     ER_TFT040_writeCommand(0x3A00);
-    ER_TFT040_writeData(0x55);  // Data format 16-Bits
+    ER_TFT040_writeData(0x07);  // Data format 24-Bits
     ER_TFT040_writeCommand(0x3600);
     ER_TFT040_writeData(0x00);
 
@@ -929,25 +967,25 @@ void ER_TFT040_init(void) {
     HAL_Delay(100);
 }
 
-void ER_TFT040_clearLCD(uint16_t color) {
+void ER_TFT040_clearLCD(uint32_t color) {
     ER_TFT040_fillRectangle(0, 0, ER_TFT040_SCREEN_WIDTH, ER_TFT040_SCREEN_HEIGHT, color);
 }
 
-void ER_TFT040_drawPixel(int16_t x, int16_t y, uint16_t color) {
+void ER_TFT040_drawPixel(int16_t x, int16_t y, uint32_t color) {
     ER_TFT040_setCursorToPixel(x, y);
 
     HAL_GPIO_WritePin(DISPLAY_CSX_GPIO_Port, DISPLAY_CSX_Pin, 0);
     HAL_GPIO_WritePin(DISPLAY_RD_GPIO_Port, DISPLAY_RD_Pin, 1);
     HAL_GPIO_WritePin(DISPLAY_DC_GPIO_Port, DISPLAY_DC_Pin, 1);
 
-    ER_TFT040_setDataPort(color);
+    ER_TFT040_set24BitDataPort(color);
 
     HAL_GPIO_WritePin(DISPLAY_WR_GPIO_Port, DISPLAY_WR_Pin, 0);
     HAL_GPIO_WritePin(DISPLAY_WR_GPIO_Port, DISPLAY_WR_Pin, 1);
     HAL_GPIO_WritePin(DISPLAY_CSX_GPIO_Port, DISPLAY_CSX_Pin, 1);
 }
 
-void ER_TFT040_drawLine(int16_t xStart, int16_t yStart, int16_t xEnd, int16_t yEnd, uint16_t color) {
+void ER_TFT040_drawLine(int16_t xStart, int16_t yStart, int16_t xEnd, int16_t yEnd, uint32_t color) {
     int16_t steep = abs(yEnd - yStart) > abs(xEnd - xStart);
 
     if (steep) {
@@ -987,21 +1025,21 @@ void ER_TFT040_drawLine(int16_t xStart, int16_t yStart, int16_t xEnd, int16_t yE
     }
 }
 
-void ER_TFT040_drawRectangle(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t color) {
+void ER_TFT040_drawRectangle(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color) {
     ER_TFT040_drawLine(x, y, x + width, y, color);
     ER_TFT040_drawLine(x + width, y, x + width, y + height, color);
     ER_TFT040_drawLine(x + width, y + height, x, y + height, color);
     ER_TFT040_drawLine(x, y + height, x, y, color);
 }
 
-void ER_TFT040_fillRectangle(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t color) {
+void ER_TFT040_fillRectangle(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color) {
     ER_TFT040_setCursorToRange(x, x + width - 1, y, y + height - 1);
 
     HAL_GPIO_WritePin(DISPLAY_CSX_GPIO_Port, DISPLAY_CSX_Pin, 0);
     HAL_GPIO_WritePin(DISPLAY_RD_GPIO_Port, DISPLAY_RD_Pin, 1);
     HAL_GPIO_WritePin(DISPLAY_DC_GPIO_Port, DISPLAY_DC_Pin, 1);
 
-    ER_TFT040_setDataPort(color);
+    ER_TFT040_set24BitDataPort(color);
 
     for (uint16_t h = 0; h < ER_TFT040_SCREEN_WIDTH; h++) {
         for (uint16_t w = 0; w < ER_TFT040_SCREEN_HEIGHT; w++) {
@@ -1013,7 +1051,7 @@ void ER_TFT040_fillRectangle(uint16_t x, uint16_t y, uint16_t width, uint16_t he
     HAL_GPIO_WritePin(DISPLAY_CSX_GPIO_Port, DISPLAY_CSX_Pin, 1);
 }
 
-void ER_TFT040_drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
+void ER_TFT040_drawCircle(int16_t x0, int16_t y0, int16_t r, uint32_t color) {
     int16_t f = 1 - r;
     int16_t ddF_x = 1;
     int16_t ddF_y = -2 * r;
@@ -1046,7 +1084,7 @@ void ER_TFT040_drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
     }
 }
 
-void ER_TFT040_fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
+void ER_TFT040_fillCircle(int16_t x0, int16_t y0, int16_t r, uint32_t color) {
     ER_TFT040_drawLine(x0, y0 - r, x0, (y0 - r) + (2 * r + 1) - 1, color);
 
     int16_t f = 1 - r;
@@ -1073,7 +1111,7 @@ void ER_TFT040_fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
 }
 
 void ER_TFT040_drawCharacter(uint8_t *font, uint8_t character, uint16_t x, uint16_t y, uint8_t fontSize,
-                             uint16_t fontColor, uint16_t bgcolor) {
+                             uint32_t fontColor, uint32_t bgcolor) {
     uint8_t i, j;
     uint8_t *temp = font;
     uint8_t fontWidth = 8 * fontSize;
@@ -1084,9 +1122,9 @@ void ER_TFT040_drawCharacter(uint8_t *font, uint8_t character, uint16_t x, uint1
     for (j = 0; j < fontHeight; j++) {
         for (i = 0; i < fontWidth; i++) {
             if ((*temp & (1 << (7 - i / fontSize))) != 0) {
-                ER_TFT040_writeData(fontColor);
+                ER_TFT040_writeColor(fontColor);
             } else {
-                ER_TFT040_writeData(bgcolor);
+                ER_TFT040_writeColor(bgcolor);
             }
         }
 
@@ -1123,8 +1161,8 @@ void ER_TFT040_drawPicture(uint16_t x, uint16_t y, uint16_t width, uint16_t heig
 
     for (l = 0; l < height; l++) {
         for (w = 0; w < width; w++) {
-            ER_TFT040_writeData(ER_TFT040_CONVERT_DATA(picture[i], picture[i + 1]));
-            i += 2;
+            ER_TFT040_writeColor(ER_TFT040_CONVERT_DATA(picture[i], picture[i + 1], picture[i + 2]));
+            i += 3;
         }
     }
 
