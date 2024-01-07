@@ -37,7 +37,9 @@ BUILD_DIR = build
 # C sources
 C_SOURCES =  \
 Core/Src/er_tft040.c \
+Core/Src/jpeg_view.c \
 Core/Src/main.c \
+Core/Src/sd_card.c \
 Core/Src/stm32f4xx_hal_msp.c \
 Core/Src/stm32f4xx_it.c \
 Core/Src/system_stm32f4xx.c \
