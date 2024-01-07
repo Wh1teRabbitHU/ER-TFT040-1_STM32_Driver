@@ -65,6 +65,51 @@ static void MX_USART1_UART_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+void ER_TFT040_textTest() {
+    ER_TFT040_textProps text1 = {.font = fontData,
+                                 .text = "Welcome to the 4 inch TFT LCD module!",
+                                 .posX = 30,
+                                 .posY = 5,
+                                 .fontSize = 1,
+                                 .fontColor = CONVERT_24BIT_COLOR(0xFF0000),
+                                 .backgroundColor = CONVERT_24BIT_COLOR(0xFFFFFF)};
+
+    ER_TFT040_textProps text2 = {.font = fontData,
+                                 .text = "Font size 1",
+                                 .posX = 10,
+                                 .posY = 20,
+                                 .fontSize = 1,
+                                 .fontColor = CONVERT_24BIT_COLOR(0xFFFFFF),
+                                 .backgroundColor = CONVERT_24BIT_COLOR(0xFF00FF)};
+    ER_TFT040_textProps text3 = {.font = fontData,
+                                 .text = "Font size 2",
+                                 .posX = 20,
+                                 .posY = 32,
+                                 .fontSize = 2,
+                                 .fontColor = CONVERT_24BIT_COLOR(0xFFFFFF),
+                                 .backgroundColor = CONVERT_24BIT_COLOR(0x0000FF)};
+    ER_TFT040_textProps text4 = {.font = fontData,
+                                 .text = "Font size 3",
+                                 .posX = 30,
+                                 .posY = 56,
+                                 .fontSize = 3,
+                                 .fontColor = CONVERT_24BIT_COLOR(0xFFFFFF),
+                                 .backgroundColor = CONVERT_24BIT_COLOR(0x00FF00)};
+    ER_TFT040_textProps text5 = {.font = fontData,
+                                 .text = "Font size 4",
+                                 .posX = 40,
+                                 .posY = 92,
+                                 .fontSize = 4,
+                                 .fontColor = CONVERT_24BIT_COLOR(0xFFFFFF),
+                                 .backgroundColor = CONVERT_24BIT_COLOR(0xFF0000)};
+
+    ER_TFT040_drawText(&text1);
+    ER_TFT040_drawText(&text2);
+    ER_TFT040_drawText(&text3);
+    ER_TFT040_drawText(&text4);
+    ER_TFT040_drawText(&text5);
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -104,10 +149,44 @@ int main(void) {
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
-    uint32_t color = 0;
+
+    ER_TFT040_clearLCD(CONVERT_24BIT_COLOR(0xFF0000));
+    ER_TFT040_clearLCD(CONVERT_24BIT_COLOR(0x00FF00));
+    ER_TFT040_clearLCD(CONVERT_24BIT_COLOR(0x0000FF));
+    ER_TFT040_clearLCD(CONVERT_24BIT_COLOR(0x222222));
+
+    ER_TFT040_drawPixel(239, 400, CONVERT_24BIT_COLOR(0xFF0000));
+    ER_TFT040_drawPixel(240, 400, CONVERT_24BIT_COLOR(0xFF0000));
+    ER_TFT040_drawPixel(241, 400, CONVERT_24BIT_COLOR(0xFF0000));
+    ER_TFT040_drawPixel(240, 399, CONVERT_24BIT_COLOR(0xFF0000));
+    ER_TFT040_drawPixel(240, 401, CONVERT_24BIT_COLOR(0xFF0000));
+    ER_TFT040_drawLine(10, 400, 200, 700, CONVERT_24BIT_COLOR(0x00FF00));
+    ER_TFT040_fillRectangle(320, 620, 160, 180, CONVERT_24BIT_COLOR(0xFF0000));
+    ER_TFT040_drawRectangle(300, 600, 160, 180, CONVERT_24BIT_COLOR(0x0000FF));
+    ER_TFT040_drawCircle(240, 400, 166, CONVERT_24BIT_COLOR(0xFF0000));
+    ER_TFT040_fillCircle(240, 400, 64, CONVERT_24BIT_COLOR(0x00FF00));
+    ER_TFT040_textTest();
+
+    char textBuffer[16];
+    uint16_t counter = 0;
+    sprintf(textBuffer, " Counter: %u", counter);
+
+    ER_TFT040_textProps counterText = {.font = fontData,
+                                       .text = textBuffer,
+                                       .posX = 10,
+                                       .posY = 200,
+                                       .fontSize = 2,
+                                       .fontColor = CONVERT_24BIT_COLOR(0xFF0000),
+                                       .backgroundColor = CONVERT_24BIT_COLOR(0xFFFFFF)};
 
     while (1) {
-        ER_TFT040_clearLCD(CONVERT_24BIT_COLOR(color++));
+        sprintf(textBuffer, " Counter: %u", counter++);
+        counterText.text = textBuffer;
+
+        ER_TFT040_drawText(&counterText);
+
+        HAL_Delay(100);
+
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
