@@ -3,8 +3,12 @@
 static void ER_TFT040_setDataPort(uint16_t data) {
     uint32_t resetData = (data ^ ER_TFT040_RESET_DATA_MASK) << 16U;
     uint32_t setData = resetData | data;
+    uint8_t d11 = (data >> 11) & 1;
 
     GPIOB->BSRR = setData;
+
+    // There is no PB11 on the STM32F446, so it is routed to PA11
+    HAL_GPIO_WritePin(DISPLAY_D11_GPIO_Port, DISPLAY_D11_Pin, d11);
 }
 
 static void swap(int16_t *a, int16_t *b) {
