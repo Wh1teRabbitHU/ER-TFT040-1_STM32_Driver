@@ -19,9 +19,8 @@ uint32_t RGB24PixelColor;
 static uint8_t jpeg_decode(JFILE *file, int startX, int startY) {
     RGB_typedef *RGB_matrix;
     uint8_t *rowBuff = malloc(34 * ER_TFT040_SCREEN_WIDTH);
-    uint32_t line_counter = 0;
-    uint32_t i = 0, xc = 0, ratio;
-    uint8_t offset = 1;
+    uint32_t lineCounter = 0;
+    uint32_t i = 0;
     JSAMPROW buffer[2] = {0};
 
     UINT lcdWidth, lcdHeight;
@@ -49,28 +48,23 @@ static uint8_t jpeg_decode(JFILE *file, int startX, int startY) {
 
     jpeg_start_decompress(&cinfo);
 
-    if (startX < 0 || startY < 0) {
-        startX = (lcdWidth - (cinfo.output_width * (offset - 1) / offset)) / 2;
-        startY = (lcdHeight - (cinfo.output_height * (offset - 1) / offset)) / 2;
-    }
+    ER_TFT040_startPictureDraw(startX, startY, cinfo.image_width, cinfo.image_height);
 
-    while (cinfo.output_scanline < cinfo.output_height && line_counter < lcdHeight - startY) {
+    while (cinfo.output_scanline < cinfo.output_height && lineCounter < lcdHeight - startY) {
         jpeg_read_scanlines(&cinfo, buffer, 1);
 
         RGB_matrix = (RGB_typedef *)buffer[0];
 
-        for (i = 0, xc = 0; i < cinfo.output_width && xc < (lcdWidth - startX); i += offset, xc++) {
+        for (i = 0; i < cinfo.output_width && i < (lcdWidth - startX); i++) {
             RGB24PixelColor = (RGB_matrix[i].R << 16) | (RGB_matrix[i].G << 8) | RGB_matrix[i].B;
 
-            ER_TFT040_drawPixel(xc + startX, line_counter + startY, RGB24PixelColor);
+            ER_TFT040_sendPicturePixel(RGB24PixelColor);
         }
 
-        for (i = 0; i < offset - 1 && cinfo.output_scanline < cinfo.output_height; i++) {
-            jpeg_read_scanlines(&cinfo, buffer, 1);
-        }
-
-        line_counter++;
+        lineCounter++;
     }
+
+    ER_TFT040_endPictureDraw();
 
     jpeg_finish_decompress(&cinfo);
     jpeg_destroy_decompress(&cinfo);

@@ -1163,3 +1163,20 @@ void ER_TFT040_drawPicture(uint16_t x, uint16_t y, uint16_t width, uint16_t heig
     ER_TFT040_writeCommand(0x3600);
     ER_TFT040_writeData(0x00);
 }
+
+void ER_TFT040_startPictureDraw(int16_t x, int16_t y, uint16_t width, uint16_t height) {
+    ER_TFT040_setCursorToRange(x, x + width - 1, y, y + height - 1);
+
+    HAL_GPIO_WritePin(DISPLAY_CSX_GPIO_Port, DISPLAY_CSX_Pin, 0);
+    HAL_GPIO_WritePin(DISPLAY_RD_GPIO_Port, DISPLAY_RD_Pin, 1);
+    HAL_GPIO_WritePin(DISPLAY_DC_GPIO_Port, DISPLAY_DC_Pin, 1);
+}
+
+void ER_TFT040_sendPicturePixel(uint32_t color) {
+    ER_TFT040_set24BitDataPort(color);
+
+    HAL_GPIO_WritePin(DISPLAY_WR_GPIO_Port, DISPLAY_WR_Pin, 0);
+    HAL_GPIO_WritePin(DISPLAY_WR_GPIO_Port, DISPLAY_WR_Pin, 1);
+}
+
+void ER_TFT040_endPictureDraw() { HAL_GPIO_WritePin(DISPLAY_CSX_GPIO_Port, DISPLAY_CSX_Pin, 1); }

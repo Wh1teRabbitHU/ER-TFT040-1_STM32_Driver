@@ -43,5 +43,8 @@ void ER_TFT040_drawCircle(int16_t x0, int16_t y0, int16_t r, uint32_t color);
 void ER_TFT040_fillCircle(int16_t x0, int16_t y0, int16_t r, uint32_t color);
 void ER_TFT040_drawText(ER_TFT040_textProps *textProps);
 void ER_TFT040_drawPicture(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t picture[]);
+void ER_TFT040_startPictureDraw(int16_t x, int16_t y, uint16_t width, uint16_t height);
+void ER_TFT040_sendPicturePixel(uint32_t color);
+void ER_TFT040_endPictureDraw();
 
 #endif

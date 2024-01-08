@@ -168,21 +168,19 @@ int main(void) {
 
     while (1) {
         jpeg_screen_view("/", "IMG01.jpg", 0, 0);
-        HAL_Delay(500);
-        jpeg_screen_view("/", "IMG02.jpg", 0, 0);  // Wrong
-        HAL_Delay(500);
+        HAL_Delay(2000);
         jpeg_screen_view("/", "IMG03.jpg", 0, 0);
-        HAL_Delay(500);
+        HAL_Delay(2000);
         jpeg_screen_view("/", "IMG04.jpg", 0, 0);
-        HAL_Delay(500);
+        HAL_Delay(2000);
         jpeg_screen_view("/", "IMG05.jpg", 0, 0);
-        HAL_Delay(500);
+        HAL_Delay(2000);
         jpeg_screen_view("/", "IMG06.jpg", 0, 0);
-        HAL_Delay(500);
+        HAL_Delay(2000);
         jpeg_screen_view("/", "IMG07.jpg", 0, 0);
-        HAL_Delay(500);
+        HAL_Delay(2000);
         jpeg_screen_view("/", "IMG08.jpg", 0, 0);
-        HAL_Delay(500);
+        HAL_Delay(2000);
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
