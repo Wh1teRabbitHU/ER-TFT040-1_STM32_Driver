@@ -51,7 +51,7 @@ SD_HandleTypeDef hsd;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-uint16_t iw, ih;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -145,28 +145,14 @@ int main(void) {
     MX_LIBJPEG_Init();
     MX_FATFS_Init();
     /* USER CODE BEGIN 2 */
+
     ER_TFT040_init();
+    ER_TFT040_clearLCD(0x000000);
+
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
-
-    ER_TFT040_clearLCD(0xFF0000);
-    ER_TFT040_clearLCD(0x00FF00);
-    ER_TFT040_clearLCD(0x0000FF);
-    ER_TFT040_clearLCD(0x000000);
-
-    ER_TFT040_drawPixel(239, 400, 0xFF0000);
-    ER_TFT040_drawPixel(240, 400, 0xFF0000);
-    ER_TFT040_drawPixel(241, 400, 0xFF0000);
-    ER_TFT040_drawPixel(240, 399, 0xFF0000);
-    ER_TFT040_drawPixel(240, 401, 0xFF0000);
-    ER_TFT040_drawLine(10, 400, 200, 700, 0x00FF00);
-    ER_TFT040_fillRectangle(320, 620, 160, 180, 0xFF0000);
-    ER_TFT040_drawRectangle(300, 600, 160, 180, 0x0000FF);
-    ER_TFT040_drawCircle(240, 400, 166, 0xFF0000);
-    ER_TFT040_fillCircle(240, 400, 64, 0x00FF00);
-    ER_TFT040_textTest();
 
     char textBuffer[16];
     uint16_t counter = 0;
@@ -181,12 +167,22 @@ int main(void) {
                                        .backgroundColor = 0xFFFFFF};
 
     while (1) {
-        jpeg_screen_view("/", "IMG02.jpg", 0, 0, &iw, &ih);
-        HAL_Delay(5000);
-        jpeg_screen_view("/", "IMG01.jpg", 0, 0, &iw, &ih);
-
-        HAL_Delay(100);
-
+        jpeg_screen_view("/", "IMG01.jpg", 0, 0);
+        HAL_Delay(500);
+        jpeg_screen_view("/", "IMG02.jpg", 0, 0);  // Wrong
+        HAL_Delay(500);
+        jpeg_screen_view("/", "IMG03.jpg", 0, 0);
+        HAL_Delay(500);
+        jpeg_screen_view("/", "IMG04.jpg", 0, 0);
+        HAL_Delay(500);
+        jpeg_screen_view("/", "IMG05.jpg", 0, 0);
+        HAL_Delay(500);
+        jpeg_screen_view("/", "IMG06.jpg", 0, 0);
+        HAL_Delay(500);
+        jpeg_screen_view("/", "IMG07.jpg", 0, 0);
+        HAL_Delay(500);
+        jpeg_screen_view("/", "IMG08.jpg", 0, 0);
+        HAL_Delay(500);
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */

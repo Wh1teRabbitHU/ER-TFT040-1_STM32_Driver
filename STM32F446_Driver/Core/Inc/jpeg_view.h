@@ -3,6 +3,6 @@
 
 #include "stdint.h"
 
-void jpeg_screen_view(char* path, char* fn, int px, int py, uint16_t* iw, uint16_t* ih);
+void jpeg_screen_view(char* path, char* fn, int startX, int startY);
 
 #endif /* INC_JPEG_VIEW_H_ */

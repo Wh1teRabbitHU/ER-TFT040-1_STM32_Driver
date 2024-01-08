@@ -7,5 +7,5 @@
 		"font_6_12.h": "c",
 		"jinclude.h": "c"
 	},
-	"cortex-debug.variableUseNaturalFormat": false
+	"cortex-debug.variableUseNaturalFormat": true
 }
