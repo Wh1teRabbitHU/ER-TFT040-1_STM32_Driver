@@ -8,9 +8,9 @@
 
 struct jpeg_decompress_struct cinfo;
 typedef struct RGB {
-    uint8_t B;
-    uint8_t G;
     uint8_t R;
+    uint8_t G;
+    uint8_t B;
 } RGB_typedef;
 struct jpeg_error_mgr jerr;
 
@@ -115,27 +115,16 @@ void jpeg_screen_view(char *path, char *fn, int px, int py, uint16_t *iw, uint16
     volatile FRESULT result = SDCard_mount("/");
 
     if (result != FR_OK) {
-        JFREE(rowBuff);
-        return;
-    }
-
-    SDCard_capacity capacity = {0};
-    SDCard_checkCapacity(&capacity);
-
-    result = SDCard_createFile("TEST_01.TXT");
-    result = SDCard_updateFile("TEST_01.TXT", "Hello me!");
-
-    if (result != FR_OK) {
+        free(rowBuff);
         return;
     }
 
     if (f_open(&file, fn, FA_READ) == FR_OK) {
         jpeg_decode(&file, rowBuff, px, py, iw, ih);
         f_close(&file);
-    } else {
-        // TODO: Handle error
     }
+
     SDCard_unmount("/");
 
-    JFREE(rowBuff);
+    free(rowBuff);
 }

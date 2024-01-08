@@ -13,12 +13,6 @@ static void ER_TFT040_set16BitDataPort(uint16_t data) {
 }
 
 static void ER_TFT040_set24BitDataPort(uint32_t data) {
-    uint8_t boolean = 0;
-    if (boolean) {
-        ER_TFT040_set16BitDataPort(CONVERT_24BIT_COLOR(data));
-        return;
-    }
-
     uint32_t upperData = (data >> 16) & ER_TFT040_UPPER_DATA_MASK;  // Data 16-23
     uint32_t lowerData = data & ER_TFT040_LOWER_DATA_MASK;          // Data 0-15
 

@@ -180,13 +180,10 @@ int main(void) {
                                        .fontColor = 0xFF0000,
                                        .backgroundColor = 0xFFFFFF};
 
-    jpeg_screen_view("/", "IMG02.jpg", 0, 0, &iw, &ih);
-
     while (1) {
-        sprintf(textBuffer, " Counter: %u", counter++);
-        counterText.text = textBuffer;
-
-        ER_TFT040_drawText(&counterText);
+        jpeg_screen_view("/", "IMG02.jpg", 0, 0, &iw, &ih);
+        HAL_Delay(5000);
+        jpeg_screen_view("/", "IMG01.jpg", 0, 0, &iw, &ih);
 
         HAL_Delay(100);
 
