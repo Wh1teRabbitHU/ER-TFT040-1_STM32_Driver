@@ -18,7 +18,7 @@ uint32_t RGB24PixelColor;
 
 static uint8_t jpeg_decode(JFILE *file, int startX, int startY) {
     RGB_typedef *RGB_matrix;
-    uint8_t *rowBuff = malloc(2048);
+    uint8_t *rowBuff = malloc(34 * ER_TFT040_SCREEN_WIDTH);
     uint32_t line_counter = 0;
     uint32_t i = 0, xc = 0, ratio;
     uint8_t offset = 1;
@@ -38,7 +38,8 @@ static uint8_t jpeg_decode(JFILE *file, int startX, int startY) {
     jpeg_read_header(&cinfo, TRUE);
 
     // Images compressed in progressive mode doesn't work, skipping
-    if (cinfo.progressive_mode) {
+    if (cinfo.progressive_mode || cinfo.image_width > lcdWidth) {
+        // TODO: show error on the screen before skip
         jpeg_destroy_decompress(&cinfo);
 
         free(rowBuff);
@@ -46,31 +47,7 @@ static uint8_t jpeg_decode(JFILE *file, int startX, int startY) {
         return 0;
     }
 
-    if (cinfo.image_width > lcdWidth) {
-        ratio = cinfo.image_width / lcdWidth;
-        cinfo.scale_num = 1;
-        if (ratio <= 8) {
-            cinfo.scale_denom = 1;
-            for (int s = 0x8; s > 0x01; s /= 2) {
-                if (ratio & s) {
-                    cinfo.scale_denom = s;
-                    break;
-                }
-            }
-        } else {
-            cinfo.scale_denom = 8;
-        }
-    }
-
     jpeg_start_decompress(&cinfo);
-
-    if (cinfo.output_width > lcdWidth) {
-        offset = cinfo.output_width / lcdWidth;
-
-        if (cinfo.output_width % lcdWidth > lcdWidth / 4) {
-            offset++;
-        }
-    }
 
     if (startX < 0 || startY < 0) {
         startX = (lcdWidth - (cinfo.output_width * (offset - 1) / offset)) / 2;
