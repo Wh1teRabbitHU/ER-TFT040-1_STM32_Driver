@@ -167,19 +167,19 @@ int main(void) {
                                        .backgroundColor = 0xFFFFFF};
 
     while (1) {
-        jpeg_screen_view("/", "IMG01.jpg", 0, 0);
+        jpeg_display("/", "IMG01.jpg", 0, 0);
         HAL_Delay(2000);
-        jpeg_screen_view("/", "IMG03.jpg", 0, 0);
+        jpeg_display("/", "IMG03.jpg", 0, 0);
         HAL_Delay(2000);
-        jpeg_screen_view("/", "IMG04.jpg", 0, 0);
+        jpeg_display("/", "IMG04.jpg", 0, 0);
         HAL_Delay(2000);
-        jpeg_screen_view("/", "IMG05.jpg", 0, 0);
+        jpeg_display("/", "IMG05.jpg", 0, 0);
         HAL_Delay(2000);
-        jpeg_screen_view("/", "IMG06.jpg", 0, 0);
+        jpeg_display("/", "IMG06.jpg", 0, 0);
         HAL_Delay(2000);
-        jpeg_screen_view("/", "IMG07.jpg", 0, 0);
+        jpeg_display("/", "IMG07.jpg", 0, 0);
         HAL_Delay(2000);
-        jpeg_screen_view("/", "IMG08.jpg", 0, 0);
+        jpeg_display("/", "IMG08.jpg", 0, 0);
         HAL_Delay(2000);
         /* USER CODE END WHILE */
 
