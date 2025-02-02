@@ -5,7 +5,8 @@
 		"*.cpp": "cpp",
 		"jpeglib.h": "c",
 		"font_6_12.h": "c",
-		"jinclude.h": "c"
+		"jinclude.h": "c",
+		"er_tft040.h": "c"
 	},
 	"cortex-debug.variableUseNaturalFormat": true
 }
